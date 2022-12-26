@@ -1,3 +1,5 @@
+package Main.proj;
+
 import java.io.File;
 
 import javafx.application.Application;
