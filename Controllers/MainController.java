@@ -13,18 +13,18 @@ public class MainController {
     public void launchCalendar(ActionEvent event) throws Exception {
         Parent CalendarWidget = new FXMLLoader((new File("Fxml/CalendarWidget.fxml")).toURI().toURL()).load();
         result_screen.getChildren().removeAll(result_screen.getChildren().toArray(new Node[]{}));
-        result_screen.getChildren().add(CalendarWidget);
+        result_screen.getChildren().addAll(CalendarWidget.getChildrenUnmodifiable());
     }
 
     public void launchEncryptDecrypt(ActionEvent event) throws Exception {
-        Parent EncryptDecryptWidget = new FXMLLoader((new File("Fxml/EncryptDecryptWidget.fxml")).toURI().toURL()).load();
+        Parent EncryptDecryptWidget = new FXMLLoader((new File("Fxml/EncryptDecrypt/KeyGenerateWidget.fxml")).toURI().toURL()).load();
         result_screen.getChildren().removeAll(result_screen.getChildren().toArray(new Node[]{}));
-        result_screen.getChildren().add(EncryptDecryptWidget);
+        result_screen.getChildren().addAll(EncryptDecryptWidget.getChildrenUnmodifiable());
     }
 
     public void launchCompressDecompress(ActionEvent event) throws Exception {
         Parent CompressDecompressWidget = new FXMLLoader((new File("Fxml/CompressDecompressWidget.fxml")).toURI().toURL()).load();
         result_screen.getChildren().removeAll(result_screen.getChildren().toArray(new Node[]{}));
-        result_screen.getChildren().add(CompressDecompressWidget);
+        result_screen.getChildren().addAll(CompressDecompressWidget.getChildrenUnmodifiable());
     }
 }

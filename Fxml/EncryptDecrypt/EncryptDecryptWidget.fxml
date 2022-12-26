@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label fx:id="dragDropOrChooseFile" alignment="CENTER" contentDisplay="CENTER" layoutX="149.0" layoutY="-2.0" onDragDropped="#handleDragDropped" onDragOver="#acceptDragDrop" onMouseClicked="#chooseFileAction" prefHeight="134.0" prefWidth="600.0" style="-fx-border-style: segments(10, 15, 15, 15); -fx-border-color: gray; -fx-border-width: 2; -fx-background-color: #DCDCDC;" text="check to choose file or drag and drop file here" AnchorPane.bottomAnchor="268.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="30.0">
+         <font>
+            <Font size="24.0" />
+         </font></Label>
+   </children>
+</AnchorPane>

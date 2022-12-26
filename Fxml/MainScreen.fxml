@@ -9,7 +9,7 @@
    <children>
       <HBox prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <VBox prefHeight="600.0" prefWidth="8.0" style="-fx-background-color: #426ff5;" HBox.hgrow="ALWAYS">
+            <VBox prefHeight="600.0" prefWidth="350.0" style="-fx-background-color: #426ff5;" HBox.hgrow="SOMETIMES">
                <children>
                   <Label text="Welcome to this app" textFill="WHITE" wrapText="true">
                      <font>
@@ -69,13 +69,13 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </VBox.margin>
                   </HBox>
-                  <Label alignment="BOTTOM_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Created by: Hamza Masoud 120191633" textAlignment="CENTER" textFill="WHITE" VBox.vgrow="ALWAYS" />
+                  <Label alignment="BOTTOM_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Created by: Hamza Masoud 120191633" textAlignment="CENTER" textFill="WHITE" wrapText="true" VBox.vgrow="ALWAYS" />
                </children>
                <padding>
                   <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                </padding>
             </VBox>
-            <Pane fx:id="result_screen" prefHeight="200.0" prefWidth="400.0" HBox.hgrow="ALWAYS" />
+            <AnchorPane fx:id="result_screen" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="640.0" HBox.hgrow="ALWAYS" />
          </children>
       </HBox>
    </children>
