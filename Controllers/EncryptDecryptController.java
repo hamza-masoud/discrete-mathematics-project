@@ -134,7 +134,7 @@ public class EncryptDecryptController implements Initializable {
         byte[] bytes = string.toString().getBytes();
         for (int i = 0; i < bytes.length; i++){
             bytes[i] = (byte)((bytes[i] + key) % 256);
-            stringResult.append(bytes[i]).append("\n");
+            stringResult.append(bytes[i]).append(" ");
         }
 
         return new String(stringResult.toString().getBytes(), StandardCharsets.UTF_8);
@@ -143,8 +143,8 @@ public class EncryptDecryptController implements Initializable {
     private String decrypt() throws FileNotFoundException {
         Scanner fileScanner = new Scanner(fileToWork);
         ArrayList<Integer> arrayList = new ArrayList<>();
-        while (fileScanner.hasNextLine())
-            arrayList.add(Integer.valueOf(fileScanner.nextLine()));
+        while (fileScanner.hasNext())
+            arrayList.add(Integer.valueOf(fileScanner.next()));
 
         byte[] bytes = new byte[arrayList.size()];
         for (int i = 0; i < bytes.length; i++)
