@@ -1,17 +1,16 @@
 package Controllers;
 
 import javafx.event.ActionEvent;
-import javafx.event.Event;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.Scanner;
-
 import Main.proj.UserData;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
@@ -20,12 +19,25 @@ import javafx.stage.FileChooser;
 public class EncryptDecryptController implements Initializable {
 
 //    Nodes to get data from it
+    @FXML
     public Label dragDropOrChooseFile;
+
+    @FXML
+    ToggleGroup EncryptDecrypt;
 
     Long key;
 
+    String functionType;
+
+    File fileToWork;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        getKey();
+        EncryptDecrypt.selectedToggleProperty().addListener((ob, o, n) -> {
+            RadioButton rb = (RadioButton)EncryptDecrypt.getSelectedToggle();
+            functionType = rb.getText();
+        });
     }
 
     protected void getKey() {
@@ -40,26 +52,35 @@ public class EncryptDecryptController implements Initializable {
     }
 
     public void handleDragDropped(DragEvent event) {
-        getKey();
         Dragboard db = event.getDragboard();
         event.setDropCompleted(db.hasFiles());
         event.consume();
-
-//        todo get the file and to encrypt or decrypt
         File file = db.getFiles().get(0);
-        System.out.println(file.getPath());
+        if (file != null) {
+            addFileAsChosen(file);
+        }
     }
 
-    public void chooseFileAction(MouseEvent e) throws FileNotFoundException {
-        FileChooser file = new FileChooser();
-        file.setTitle("Choose File to encrypt or decrypt");
-        File g = file.showOpenDialog(null);
-        Scanner scan = new Scanner(g);
-        StringBuilder strB = new StringBuilder();
-        while (scan.hasNextLine()) {
-            strB.append(scan.nextLine());
+    public void chooseFileAction(MouseEvent e) {
+        FileChooser fileChosen = new FileChooser();
+        fileChosen.setTitle("Choose File to encrypt or decrypt");
+        File file = fileChosen.showOpenDialog(null);
+        if (file != null) {
+            addFileAsChosen(file);
         }
-        //        todo get the file and to encrypt or decrypt
+    }
+
+    private void addFileAsChosen(File file) {
+        ImageView node = new ImageView(new Image("@../../Media/file.png"));
+        node.setFitHeight(150);
+        node.setFitWidth(150);
+        dragDropOrChooseFile.setGraphic(node);
+        dragDropOrChooseFile.setText(file.getName());
+        fileToWork = file;
+    }
+
+    public void submit(ActionEvent event) {
+
     }
 
 }
