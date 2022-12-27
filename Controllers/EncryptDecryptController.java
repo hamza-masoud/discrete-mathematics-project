@@ -10,6 +10,8 @@ import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -35,7 +37,9 @@ public class EncryptDecryptController implements Initializable {
 
     Long key;
 
-    String functionType;
+    String functionType = "Encrypt";
+    String readFileExtension = "txt";
+    String writeFileExtension = "encrypted";
 
     File fileToWork;
 
@@ -44,6 +48,13 @@ public class EncryptDecryptController implements Initializable {
         EncryptDecrypt.selectedToggleProperty().addListener((ob, o, n) -> {
             RadioButton rb = (RadioButton)EncryptDecrypt.getSelectedToggle();
             functionType = rb.getText();
+            if (functionType.equals("Encrypt")) {
+                readFileExtension = "txt";
+                writeFileExtension = "encrypted";
+            } else if (functionType.equals("Decrypt")) {
+                readFileExtension = "encrypted";
+                writeFileExtension = "txt";
+            }
         });
     }
 
@@ -70,6 +81,8 @@ public class EncryptDecryptController implements Initializable {
 
     public void chooseFileAction(MouseEvent e) {
         FileChooser fileChosen = new FileChooser();
+        fileChosen.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("All Files", "*."+readFileExtension));
+
         fileChosen.setTitle("Choose File to encrypt or decrypt");
         File file = fileChosen.showOpenDialog(null);
         if (file != null) {
@@ -87,27 +100,44 @@ public class EncryptDecryptController implements Initializable {
         submit.setDisable(false);
     }
 
-    public void submit(ActionEvent event) throws FileNotFoundException {
-        String result = null;
+    public void submit(ActionEvent event) throws IOException {
+        String result = "";
         getKey();
-        switch (functionType) {
-            case "Encrypt" -> result=encrypt();
-            case "Decrypt" -> result=decrypt();
+        if (functionType.equals("Encrypt"))
+            result = encrypt();
+        else if (functionType.equals("Decrypt"))
+            result = decrypt();
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save");
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("All Files", "*." + writeFileExtension));
+        File file = fileChooser.showSaveDialog(null);
+        if (!file.exists() && file.createNewFile()) {
+            FileWriter write = new FileWriter(file);
+            write.write(result);
+            write.close();
+        } else if (file.exists()) {
+            FileWriter write = new FileWriter(file);
+            write.write(result);
+            write.close();
         }
-        System.out.println(result);
     }
 
     private String encrypt() throws FileNotFoundException {
         Scanner fileScanner = new Scanner(fileToWork);
         StringBuilder string = new StringBuilder();
+        StringBuilder stringResult = new StringBuilder();
+        //read file
         while (fileScanner.hasNextLine())
-            string.append(fileScanner.nextLine());
-
+            string.append(fileScanner.nextLine()).append("\n");
+        //encrypt file
         byte[] bytes = string.toString().getBytes();
-        for (int i = 0; i < bytes.length; i++)
+        for (int i = 0; i < bytes.length; i++){
             bytes[i] = (byte)((bytes[i] + key) % 256);
+            stringResult.append(bytes[i]).append("\n");
+        }
 
-        return new String(bytes, StandardCharsets.UTF_8);
+        return new String(stringResult.toString().getBytes(), StandardCharsets.UTF_8);
     }
 
     private String decrypt() throws FileNotFoundException {
