@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
@@ -109,8 +110,17 @@ public class EncryptDecryptController implements Initializable {
         return new String(bytes, StandardCharsets.UTF_8);
     }
 
-    private String decrypt() {
-        return null;
+    private String decrypt() throws FileNotFoundException {
+        Scanner fileScanner = new Scanner(fileToWork);
+        ArrayList<Integer> arrayList = new ArrayList<>();
+        while (fileScanner.hasNextLine())
+            arrayList.add(Integer.valueOf(fileScanner.nextLine()));
+
+        byte[] bytes = new byte[arrayList.size()];
+        for (int i = 0; i < bytes.length; i++)
+            bytes[i] = (byte)((arrayList.get(i) - key) % 256);
+
+        return new String(bytes, StandardCharsets.UTF_8);
     }
 
 }
