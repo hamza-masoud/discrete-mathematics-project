@@ -9,8 +9,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ResourceBundle;
+import java.util.Scanner;
+
 import Main.proj.UserData;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
@@ -36,7 +40,6 @@ public class EncryptDecryptController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        getKey();
         EncryptDecrypt.selectedToggleProperty().addListener((ob, o, n) -> {
             RadioButton rb = (RadioButton)EncryptDecrypt.getSelectedToggle();
             functionType = rb.getText();
@@ -83,8 +86,31 @@ public class EncryptDecryptController implements Initializable {
         submit.setDisable(false);
     }
 
-    public void submit(ActionEvent event) {
+    public void submit(ActionEvent event) throws FileNotFoundException {
+        String result = null;
+        getKey();
+        switch (functionType) {
+            case "Encrypt" -> result=encrypt();
+            case "Decrypt" -> result=decrypt();
+        }
+        System.out.println(result);
+    }
 
+    private String encrypt() throws FileNotFoundException {
+        Scanner fileScanner = new Scanner(fileToWork);
+        StringBuilder string = new StringBuilder();
+        while (fileScanner.hasNextLine())
+            string.append(fileScanner.nextLine());
+
+        byte[] bytes = string.toString().getBytes();
+        for (int i = 0; i < bytes.length; i++)
+            bytes[i] = (byte)((bytes[i] + key) % 256);
+
+        return new String(bytes, StandardCharsets.UTF_8);
+    }
+
+    private String decrypt() {
+        return null;
     }
 
 }
