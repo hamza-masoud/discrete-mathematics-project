@@ -112,15 +112,9 @@ public class EncryptDecryptController implements Initializable {
         fileChooser.setTitle("Save");
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("All Files", "*." + writeFileExtension));
         File file = fileChooser.showSaveDialog(null);
-        if (!file.exists() && file.createNewFile()) {
             FileWriter write = new FileWriter(file);
             write.write(result);
             write.close();
-        } else if (file.exists()) {
-            FileWriter write = new FileWriter(file);
-            write.write(result);
-            write.close();
-        }
     }
 
     private String encrypt() throws FileNotFoundException {
@@ -130,6 +124,7 @@ public class EncryptDecryptController implements Initializable {
         //read file
         while (fileScanner.hasNextLine())
             string.append(fileScanner.nextLine()).append("\n");
+        fileScanner.close();
         //encrypt file
         byte[] bytes = string.toString().getBytes();
         for (int i = 0; i < bytes.length; i++){
@@ -145,6 +140,7 @@ public class EncryptDecryptController implements Initializable {
         ArrayList<Integer> arrayList = new ArrayList<>();
         while (fileScanner.hasNext())
             arrayList.add(Integer.valueOf(fileScanner.next()));
+        fileScanner.close();
 
         byte[] bytes = new byte[arrayList.size()];
         for (int i = 0; i < bytes.length; i++)
