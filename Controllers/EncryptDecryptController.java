@@ -3,6 +3,7 @@ package Controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -33,6 +34,7 @@ public class EncryptDecryptController implements Initializable {
     String functionType;
 
     File fileToWork;
+    private Scene scene;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -44,7 +46,7 @@ public class EncryptDecryptController implements Initializable {
     }
 
     protected void getKey() {
-        key = ((UserData)dragDropOrChooseFile.getScene().getWindow().getUserData()).key;
+        key = ((UserData)scene.getWindow().getUserData()).key;
     }
 
     public void acceptDragDrop(DragEvent event) {
@@ -87,4 +89,7 @@ public class EncryptDecryptController implements Initializable {
 
     }
 
+    public void setScene(Scene scene) {
+        this.scene = scene;
+    }
 }
