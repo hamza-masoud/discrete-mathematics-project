@@ -25,6 +25,9 @@ public class EncryptDecryptController implements Initializable {
     @FXML
     ToggleGroup EncryptDecrypt;
 
+    @FXML
+    Button submit;
+
     Long key;
 
     String functionType;
@@ -77,6 +80,7 @@ public class EncryptDecryptController implements Initializable {
         dragDropOrChooseFile.setGraphic(node);
         dragDropOrChooseFile.setText(file.getName());
         fileToWork = file;
+        submit.setDisable(false);
     }
 
     public void submit(ActionEvent event) {
